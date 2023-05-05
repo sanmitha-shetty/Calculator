@@ -18,117 +18,152 @@ const divideButton = document.querySelector(".divide");
 const equalButton = document.getElementById("equal");
 const allClearButton = document.getElementById("all-clear");
 
-const numButton = document.querySelectorAll('.numButton');
-const opButton = document.querySelectorAll('.opButton');
-
 let lowerDisplay= document.querySelector(".lower-display");
 let upperDisplay= document.querySelector(".upper-display");
 
+lowerDisplay.textContent = 0;
+upperDisplay.textContent = 0;
+
 let prevNum = 0;
 let currentNum= 0;
-let operator = null;
+let operator = '';
 let displayVal = 0;
+let result =0;
+let opValue =true;
 
-console.log(equalButton.textContent)
+// Function to populate display
+function populateDisplay(num){
+    if (lowerDisplay.textContent == "0"){
+        lowerDisplay.textContent = null;
+    }
+        lowerDisplay.textContent = lowerDisplay.textContent.replace(/[\n\r]+|[\s]{2,}/g, ' ').trim()+num;
+        prevNum = parseInt(lowerDisplay.textContent);
+        console.log(prevNum);
+};
+
+//Function to update the operator
+function updateOperator(sign){
+    if (opValue == true){
+        operator = sign;
+        currentNum = prevNum;
+        if(upperDisplay.textContent == "0"){
+            upperDisplay.textContent = null;
+        }
+            upperDisplay.textContent =(prevNum+" "+sign+ " ");
+            lowerDisplay.textContent = 0;
+    }
+    else{
+        result = operate(operator, currentNum, prevNum);
+        console.log(result);
+        operator = sign;
+        currentNum = result;
+        upperDisplay.textContent += (prevNum+" "+sign+ " ");
+        lowerDisplay.textContent = 0;
+    }
+    opValue = false;
+};
 
 //Event Listeners for all operation buttons
 plusButton.addEventListener('click' ,()=>{
-    operator = '+';
-    console.log(operator);
+    updateOperator('+');
 });
 minusButton.addEventListener('click' ,()=>{
-    operator = '-';
-    console.log(operator);
+    updateOperator('-');
 })
 multiplyButton.addEventListener('click' ,()=>{
-    operator = '*';
-    console.log(operator);
+    updateOperator('*');
 })
 divideButton.addEventListener('click' ,()=>{
-    operator = '/';
-    console.log(operator);
-})
+    updateOperator('/');
+});
+    
 equalButton.addEventListener('click' ,()=>{
-    operate(operator);
-})
+    let x = operate(operator, currentNum, prevNum);
+    console.log(x);
+    upperDisplay.textContent = Math.round((x + Number.EPSILON) * 100000) / 100000;
+    lowerDisplay.textContent = result;
+});
 allClearButton.addEventListener('click' ,()=>{
     window.location.reload();
-})
-console.log(operator);
+});
+
 
 //Function to operate
-function operate(operator, prevNum, currentNum){
-    prevNum = parseInt(prevNum);
-    currentNum = parseInt(currentNum);
+function operate(operator, currentNum, prevNum){
+
     switch (operator) {
         case '+':
-        displayVal = (addition(prevNum, currentNum));
+            displayVal = prevNum + currentNum;
             break;
         case '-':
-            displayVal =(subtract(prevNum, currentNum));
+            displayVal = currentNum - prevNum;
             break;
         case '*':
-            displayVal = (multiply(prevNum, currentNum));
+            displayVal= currentNum*prevNum;
             break;
         case '/':
-           displayVal= (division(prevNum, currentNum));
+           displayVal = currentNum/prevNum;
             break;
     };
-    lowerDisplay.textContent = displayVal;
+    console.log(prevNum, currentNum)
+    return displayVal;
+    
+    
 };
 
-console.log(operate());
 
-//Functions for all operations
+/* //Functions for all operations
 function addition(prevNum, currentNum){
     let sum = prevNum + currentNum;
-    return (sum);
+    return sum;
 };
 function subtract(prevNum, currentNum){
     let minus = prevNum - currentNum;
     return minus;
 };
 function multiply(prevNum, currentNum){
-    product = prevNum*currentNum;
+    product = prevNum - currentNum;
     return product;
 };
 function division(prevNum, currentNum){
     divide = prevNum/currentNum;
     return divide;
-};
-//console.log(addition(10,5),subtract(10,5), multiply(10,5), division(10,5));
+}; */
+
 
 //Event Listeners for number buttons
 numOne.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numOne.textContent;
+    populateDisplay(1);
+    // lowerDisplay.textContent= numOne.textContent;
 })
 numTwo.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numTwo.textContent;
+    populateDisplay(2);
 })
 numThree.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numThree.textContent;
+    populateDisplay(3);
 })
 numFour.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numFour.textContent;
+    populateDisplay(4);
 })
 numFive.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numFive.textContent;
+    populateDisplay(5);
 })
 numSix.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numSix.textContent;
+    populateDisplay(6);
 })
 numSeven.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numSeven.textContent;
+    populateDisplay(7);
 })
 numEight.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numEight.textContent;
+    populateDisplay(8);
 })
 numNine.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numNine.textContent;
+    populateDisplay(9);
 })
 numZero.addEventListener('click', ()=>{
-    lowerDisplay.textContent = numZero.textContent;
+    populateDisplay(0);
 })
 decimalPoint.addEventListener('click', ()=>{
-    lowerDisplay.textContent = decimalPoint.textContent;
+    populateDisplay('.');
 })
+
