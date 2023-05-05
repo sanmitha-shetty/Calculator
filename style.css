@@ -33,20 +33,24 @@ p{
     border: solid black 2px;
     background-color: rgb(245, 232, 163);
     flex-direction: row;
+    justify-content: space-evenly;
 }
 .numbers{
     display: flex;
     float: left;
-    width: 200px;
-    height: fit-content;
+    width: 230px;
+    flex-grow: 1;
     flex-wrap: wrap;
     margin: 0 px;
+    flex-direction: row; 
+
 }
 .operators{
     display: flex;
     float: right;
-    width: 150px;
+    width: 140px;
     flex-wrap: wrap;
+    flex-grow: 1;
     margin: 0;
     flex-direction: row;
 }
@@ -54,19 +58,35 @@ p{
     display:flex;
     float:left;
     flex-direction: column; 
-    align-items: center;
+    justify-content: space-around;
 }
 .special-ops{
     display:flex;
     float:right;
     flex-direction: column; 
+    justify-content: space-around;
 }
 
 button{
     background-color: #4C3D3D;
     color: #fff7d4;
-    font-size: 60px;
+    font-size: 55px;
     margin: 5px;
     padding: 0 5px;
-    width: 55px;
+    width: 60px;
+    flex-grow: 1;
+    border: #fff7d4 solid 1px;
+    border-radius: 5px;
+}
+ .long-btn{
+    height:100px;
+    flex-grow: 1;
+ }
+#a-c{
+    font-size: 55px;
+    margin: 0;
+    padding: 0;
+}
+.point{
+    flex-grow: 0;
 }
